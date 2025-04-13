@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Resources - Mental Health Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .resource-card {
+            height: 100%;
+            transition: transform 0.2s;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        .topic-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #e7f1ff;
+            color: #0c63e4;
+        }
+        .resource-link {
+            text-decoration: none;
+            color: #0d6efd;
+            transition: color 0.2s;
+        }
+        .resource-link:hover {
+            color: #0a58ca;
+        }
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        .category-badge {
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Mental Health Portal</a>
+            <div class="d-flex">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-primary me-2">Home</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Educational Resources</h1>
+        
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search resources...">
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="card resource-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-brain topic-icon text-primary"></i>
+                        <h5 class="card-title">Mental Health Conditions</h5>
+                        <p class="card-text">Learn about common mental health conditions and their symptoms.</p>
+                        <button class="btn btn-primary" onclick="scrollToSection('conditions')">Explore Conditions</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card resource-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-hand-holding-medical topic-icon text-success"></i>
+                        <h5 class="card-title">Treatment Options</h5>
+                        <p class="card-text">Discover various treatment approaches and therapies.</p>
+                        <button class="btn btn-success" onclick="scrollToSection('treatments')">View Treatments</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card resource-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-heart topic-icon text-danger"></i>
+                        <h5 class="card-title">Coping Strategies</h5>
+                        <p class="card-text">Learn practical techniques for managing mental health.</p>
+                        <button class="btn btn-danger" onclick="scrollToSection('coping')">Explore Strategies</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mental Health Conditions -->
+        <section id="conditions" class="mb-5">
+            <h2 class="mb-4">Mental Health Conditions</h2>
+            <div class="accordion" id="conditionsAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#anxiety">
+                            Anxiety Disorders
+                        </button>
+                    </h2>
+                    <div id="anxiety" class="accordion-collapse collapse show" data-bs-parent="#conditionsAccordion">
+                        <div class="accordion-body">
+                            <span class="badge bg-primary category-badge">Common Condition</span>
+                            <span class="badge bg-info category-badge">Treatable</span>
+                            <h5 class="mt-3">What is Anxiety?</h5>
+                            <p>Anxiety disorders involve persistent, excessive fear or worry in situations that are not threatening. People with anxiety disorders often experience:</p>
+                            <ul>
+                                <li>Persistent worrying</li>
+                                <li>Physical symptoms (rapid heartbeat, sweating)</li>
+                                <li>Difficulty concentrating</li>
+                                <li>Sleep problems</li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" class="resource-link">Learn more about anxiety disorders →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#depression">
+                            Depression
+                        </button>
+                    </h2>
+                    <div id="depression" class="accordion-collapse collapse" data-bs-parent="#conditionsAccordion">
+                        <div class="accordion-body">
+                            <span class="badge bg-primary category-badge">Common Condition</span>
+                            <span class="badge bg-info category-badge">Treatable</span>
+                            <h5 class="mt-3">Understanding Depression</h5>
+                            <p>Depression is more than just feeling sad. It's a serious mental health condition that affects how you feel, think, and handle daily activities. Common symptoms include:</p>
+                            <ul>
+                                <li>Persistent sad, anxious, or empty mood</li>
+                                <li>Loss of interest in activities</li>
+                                <li>Changes in appetite and sleep patterns</li>
+                                <li>Difficulty concentrating</li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" class="resource-link">Learn more about depression →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more conditions as needed -->
+            </div>
+        </section>
+
+        <!-- Treatment Options -->
+        <section id="treatments" class="mb-5">
+            <h2 class="mb-4">Treatment Options</h2>
+            <div class="accordion" id="treatmentsAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#therapy">
+                            Psychotherapy
+                        </button>
+                    </h2>
+                    <div id="therapy" class="accordion-collapse collapse show" data-bs-parent="#treatmentsAccordion">
+                        <div class="accordion-body">
+                            <span class="badge bg-success category-badge">Evidence-based</span>
+                            <span class="badge bg-info category-badge">Professional Treatment</span>
+                            <h5 class="mt-3">Types of Therapy</h5>
+                            <ul>
+                                <li><strong>Cognitive Behavioral Therapy (CBT)</strong> - Focuses on identifying and changing negative thought patterns</li>
+                                <li><strong>Interpersonal Therapy</strong> - Addresses relationships and social interactions</li>
+                                <li><strong>Mindfulness-Based Therapy</strong> - Combines meditation and behavioral techniques</li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" class="resource-link">Explore therapy options →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#medication">
+                            Medication
+                        </button>
+                    </h2>
+                    <div id="medication" class="accordion-collapse collapse" data-bs-parent="#treatmentsAccordion">
+                        <div class="accordion-body">
+                            <span class="badge bg-success category-badge">Medical Treatment</span>
+                            <span class="badge bg-warning category-badge">Prescription Required</span>
+                            <h5 class="mt-3">Common Medications</h5>
+                            <p>Mental health medications can be an important part of treatment. Common types include:</p>
+                            <ul>
+                                <li>Antidepressants</li>
+                                <li>Anti-anxiety medications</li>
+                                <li>Mood stabilizers</li>
+                                <li>Antipsychotics</li>
+                            </ul>
+                            <div class="alert alert-info">
+                                Always consult with a healthcare provider about medication options and potential side effects.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coping Strategies -->
+        <section id="coping" class="mb-5">
+            <h2 class="mb-4">Coping Strategies</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Daily Wellness Practices</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-bed text-primary me-2"></i>
+                                    <strong>Sleep Hygiene</strong>
+                                    <p class="ms-4">Maintain a regular sleep schedule and create a relaxing bedtime routine.</p>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-running text-success me-2"></i>
+                                    <strong>Exercise</strong>
+                                    <p class="ms-4">Regular physical activity can help reduce stress and improve mood.</p>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-utensils text-danger me-2"></i>
+                                    <strong>Healthy Eating</strong>
+                                    <p class="ms-4">A balanced diet can support both physical and mental well-being.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Stress Management Techniques</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fas fa-peace text-primary me-2"></i>
+                                    <strong>Mindfulness</strong>
+                                    <p class="ms-4">Practice being present in the moment without judgment.</p>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-book text-success me-2"></i>
+                                    <strong>Journaling</strong>
+                                    <p class="ms-4">Write down thoughts and feelings to process emotions.</p>
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-users text-danger me-2"></i>
+                                    <strong>Social Support</strong>
+                                    <p class="ms-4">Connect with friends, family, or support groups.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            
+            accordionItems.forEach(item => {
+                const content = item.textContent.toLowerCase();
+                if (content.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Smooth scroll to sections
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

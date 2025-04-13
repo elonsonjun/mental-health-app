@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Hygiene - Mental Health Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .sleep-section {
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .sleep-section:hover {
+            transform: translateY(-5px);
+        }
+        .sleep-icon {
+            font-size: 2.5rem;
+            color: #7209b7;
+            margin-bottom: 1rem;
+        }
+        .tip-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #7209b7;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .checklist-item:hover {
+            background: #f8f9fa;
+        }
+        .checklist-item i {
+            color: #7209b7;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <i class="bi bi-heart-pulse-fill me-2"></i>Mental Health Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <i class="bi bi-house-door me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('self_help') }}">
+                            <i class="bi bi-book me-1"></i>Self-Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-5">
+            <i class="bi bi-moon-stars me-2"></i>Sleep Hygiene Guide
+        </h1>
+
+        <!-- Sleep Schedules -->
+        <div class="sleep-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-alarm sleep-icon"></i>
+                        <h2 class="mb-4">Sleep Schedules</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="tip-card">
+                        <h4>Why is a consistent sleep schedule important?</h4>
+                        <p>A regular sleep schedule helps regulate your body's internal clock (circadian rhythm), making it easier to fall asleep and wake up naturally.</p>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Set Fixed Sleep and Wake Times</h5>
+                                <p>Go to bed and wake up at the same time every day, even on weekends.</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Plan for 7-9 Hours</h5>
+                                <p>Ensure your schedule allows for 7-9 hours of sleep each night.</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Adjust Gradually</h5>
+                                <p>Make small 15-minute adjustments to your sleep schedule when needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bedtime Routines -->
+        <div class="sleep-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-stars sleep-icon"></i>
+                        <h2 class="mb-4">Bedtime Routines</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="tip-card">
+                        <h4>Creating a Relaxing Routine</h4>
+                        <p>A consistent bedtime routine signals to your body that it's time to wind down and prepare for sleep.</p>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Digital Sunset</h5>
+                                <p>Stop using electronic devices 1-2 hours before bed to reduce blue light exposure.</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Relaxation Activities</h5>
+                                <p>Read a book, practice gentle stretching, or try meditation before bed.</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Avoid Heavy Meals</h5>
+                                <p>Finish eating at least 2-3 hours before bedtime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sleep Environment -->
+        <div class="sleep-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-house-heart sleep-icon"></i>
+                        <h2 class="mb-4">Sleep Environment</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="tip-card">
+                        <h4>Optimizing Your Sleep Space</h4>
+                        <p>Your bedroom environment plays a crucial role in the quality of your sleep.</p>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Temperature Control</h5>
+                                <p>Keep your bedroom cool (around 65-68°F or 18-20°C).</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Dark and Quiet</h5>
+                                <p>Use blackout curtains and consider white noise if needed.</p>
+                            </div>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="bi bi-check-circle"></i>
+                            <div>
+                                <h5>Comfortable Bedding</h5>
+                                <p>Invest in a supportive mattress and comfortable pillows.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Mental Health Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

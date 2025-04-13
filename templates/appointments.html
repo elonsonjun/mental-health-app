@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Appointments</h2>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% if session.get('role') == 'patient' %}
+                <!-- Book New Appointment Section -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>Book New Appointment</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="appointmentForm" method="POST" action="{{ url_for('create_appointment') }}">
+                            <div class="form-group">
+                                <label for="doctor">Select Doctor:</label>
+                                <select class="form-control" id="doctor" name="doctor_id" required>
+                                    <option value="">Choose a doctor...</option>
+                                    {% for doctor in doctors %}
+                                    <option value="{{ doctor.id }}">Dr. {{ doctor.username }} - {{ doctor.specialization }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date:</label>
+                                <input type="date" class="form-control" id="date" name="date" required min="{{ today }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time:</label>
+                                <input type="time" class="form-control" id="time" name="time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes (Optional):</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Current Appointments Section -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>Current Appointments</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if current_appointments %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for appointment in current_appointments %}
+                                        <tr>
+                                            <td>Dr. {{ appointment.doctor.username }}</td>
+                                            <td>{{ appointment.date }}</td>
+                                            <td>{{ appointment.time }}</td>
+                                            <td>
+                                                {% if appointment.status == 'pending' %}
+                                                    <span class="badge bg-warning">Pending</span>
+                                                {% elif appointment.status == 'confirmed' %}
+                                                    <span class="badge bg-success">Confirmed</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <form action="{{ url_for('cancel_appointment', appointment_id=appointment.id) }}" method="POST" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                                                        Cancel
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-center mb-0">No current appointments.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Past Appointments Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Past Appointments</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if past_appointments %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for appointment in past_appointments %}
+                                        <tr>
+                                            <td>Dr. {{ appointment.doctor.username }}</td>
+                                            <td>{{ appointment.date }}</td>
+                                            <td>{{ appointment.time }}</td>
+                                            <td>
+                                                {% if appointment.status == 'completed' %}
+                                                    <span class="badge bg-info">Completed</span>
+                                                {% elif appointment.status == 'cancelled' %}
+                                                    <span class="badge bg-danger">Cancelled</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if appointment.status == 'completed' %}
+                                                    <a href="{{ url_for('patient_feedback', appointment_id=appointment.id) }}" 
+                                                       class="btn btn-primary btn-sm">
+                                                        Give Feedback
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-center mb-0">No past appointments.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <!-- Doctor's View -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Your Appointments</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if appointments %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for appointment in appointments %}
+                                        <tr>
+                                            <td>{{ appointment.patient.username }}</td>
+                                            <td>{{ appointment.date }}</td>
+                                            <td>{{ appointment.time }}</td>
+                                            <td>{{ appointment.status }}</td>
+                                            <td>
+                                                {% if appointment.status == 'pending' %}
+                                                    <form action="{{ url_for('confirm_appointment', appointment_id=appointment.id) }}" method="POST" class="d-inline">
+                                                        <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+                                                    </form>
+                                                {% elif appointment.status == 'confirmed' %}
+                                                    <form action="{{ url_for('mark_completed', appointment_id=appointment.id) }}" method="POST" class="d-inline">
+                                                        <button type="submit" class="btn btn-primary btn-sm">Mark Completed</button>
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p>No appointments found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- 24/7 Support Section -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-headset me-2"></i>24/7 Support</h4>
+                </div>
+                <div class="card-body">
+                    <p>Need immediate assistance? Our support team is available 24/7 to help you.</p>
+                    <div class="d-grid gap-2">
+                        <a href="tel:1800-123-4567" class="btn btn-outline-primary">
+                            <i class="bi bi-telephone-fill me-2"></i>1800-123-4567
+                        </a>
+                        <a href="#" class="btn btn-outline-success">
+                            <i class="bi bi-chat-dots-fill me-2"></i>Start Live Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Date validation
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+        
+        // Time slot validation
+        $('#time').change(function() {
+            var selectedTime = $(this).val();
+            var hour = parseInt(selectedTime.split(':')[0]);
+            
+            if (hour < 9 || hour >= 17) {
+                alert('Please select a time between 9 AM and 5 PM');
+                $(this).val('');
+            }
+        });
+    });
+</script>
+
+<style>
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.rating input:checked ~ label {
+    color: #ffd700;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffd700;
+}
+</style>
+{% endblock %}

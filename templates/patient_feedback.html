@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Submit Feedback for Dr. {{ doctor.username }}</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ url_for('submit_feedback', doctor_id=doctor.id) }}" method="POST">
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating (1-5 stars)</label>
+                    <select class="form-select" id="rating" name="rating" required>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comments (Optional)</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

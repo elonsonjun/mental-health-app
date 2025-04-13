@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="text-center my-5">
+        <h1 class="display-4">Welcome to Your Safe Space <i class="bi bi-heart-fill text-success"></i></h1>
+        <p class="lead mt-3">You're not alone on this journey. We're here to support you every step of the way.</p>
+        <p class="mt-4">Whether you're looking for professional support, self-help resources, or just someone to talk to, you've come to the right place. Take a deep breath – you've already taken the first step towards better mental well-being.</p>
+    </div>
+
+    <style>
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 15px;
+            border: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        .card .bi {
+            font-size: 2.5rem;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+        }
+        .shadow-sm {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+        }
+    </style>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+                    <h3 class="card-title text-dark">24/7 Support</h3>
+                    <p class="card-text text-muted">Connect with our caring community and mental health professionals anytime, anywhere.</p>
+                    {% if session.get('user_id') %}
+                        <div class="mt-3">
+                            <a href="{{ url_for('appointments') }}" class="btn btn-primary btn-lg w-100">
+                                <i class="bi bi-calendar-check me-2"></i>Access Support
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="mt-3">
+                            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg w-100">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login to Access Support
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-book-fill display-4 text-success mb-3"></i>
+                    <h3 class="card-title">Self-Help Resources</h3>
+                    <p class="card-text">Access a wealth of resources, tips, and techniques for managing your mental well-being.</p>
+                    <a href="{{ url_for('self_help') }}" class="btn btn-success mt-3">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Access Resources
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-chat-dots-fill display-4 text-info mb-3"></i>
+                    <h3 class="card-title">Friendly Chat</h3>
+                    <p class="card-text">Need someone to talk to? Our supportive chatbot is here to listen and help guide you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anxiety Management - Mental Health Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .anxiety-section {
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .anxiety-section:hover {
+            transform: translateY(-5px);
+        }
+        .anxiety-icon {
+            font-size: 2.5rem;
+            color: #7209b7;
+            margin-bottom: 1rem;
+        }
+        .technique-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #7209b7;
+            transition: all 0.3s ease;
+        }
+        .technique-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .trigger-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .trigger-tag:hover {
+            background: #7209b7;
+            color: white;
+        }
+        .breathing-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7209b7, #4cc9f0);
+            margin: 2rem auto;
+            animation: breathe 8s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .grounding-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .grounding-item:hover {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <i class="bi bi-heart-pulse-fill me-2"></i>Mental Health Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <i class="bi bi-house-door me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('self_help') }}">
+                            <i class="bi bi-book me-1"></i>Self-Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center mb-5">
+            <i class="bi bi-heart-half me-2"></i>Anxiety Management Guide
+        </h1>
+
+        <!-- Coping Techniques -->
+        <div class="anxiety-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-shield-check anxiety-icon"></i>
+                        <h2 class="mb-4">Coping Techniques</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="technique-card">
+                        <h4>5-4-3-2-1 Grounding Exercise</h4>
+                        <p>Use your senses to ground yourself in the present moment:</p>
+                        <div class="grounding-item">
+                            <i class="bi bi-eye me-2"></i>5 things you can see
+                        </div>
+                        <div class="grounding-item">
+                            <i class="bi bi-hand me-2"></i>4 things you can touch
+                        </div>
+                        <div class="grounding-item">
+                            <i class="bi bi-ear me-2"></i>3 things you can hear
+                        </div>
+                        <div class="grounding-item">
+                            <i class="bi bi-wind me-2"></i>2 things you can smell
+                        </div>
+                        <div class="grounding-item">
+                            <i class="bi bi-cup-hot me-2"></i>1 thing you can taste
+                        </div>
+                    </div>
+                    <div class="technique-card">
+                        <h4>STOP Technique</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><strong>S</strong> - Stop what you're doing</li>
+                            <li class="mb-3"><strong>T</strong> - Take a step back</li>
+                            <li class="mb-3"><strong>O</strong> - Observe your thoughts and feelings</li>
+                            <li class="mb-3"><strong>P</strong> - Proceed mindfully</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anxiety Triggers -->
+        <div class="anxiety-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-exclamation-triangle anxiety-icon"></i>
+                        <h2 class="mb-4">Anxiety Triggers</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="technique-card">
+                        <h4>Common Triggers</h4>
+                        <p>Identifying your triggers is the first step to managing them:</p>
+                        <div class="trigger-tags mt-3">
+                            <span class="trigger-tag">Work Deadlines</span>
+                            <span class="trigger-tag">Social Situations</span>
+                            <span class="trigger-tag">Health Concerns</span>
+                            <span class="trigger-tag">Financial Stress</span>
+                            <span class="trigger-tag">Conflict</span>
+                            <span class="trigger-tag">Change</span>
+                            <span class="trigger-tag">Perfectionism</span>
+                            <span class="trigger-tag">Time Pressure</span>
+                        </div>
+                    </div>
+                    <div class="technique-card">
+                        <h4>Trigger Journal</h4>
+                        <p>Track your anxiety triggers with these prompts:</p>
+                        <ul>
+                            <li>What was happening when you felt anxious?</li>
+                            <li>What thoughts were going through your mind?</li>
+                            <li>What physical sensations did you experience?</li>
+                            <li>How intense was the anxiety (1-10)?</li>
+                            <li>What helped you cope with it?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relaxation Methods -->
+        <div class="anxiety-section">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <i class="bi bi-peace anxiety-icon"></i>
+                        <h2 class="mb-4">Relaxation Methods</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="technique-card">
+                        <h4>Box Breathing</h4>
+                        <p>Follow the circle to practice box breathing:</p>
+                        <div class="breathing-circle" id="breathingCircle">
+                            <div id="breathingText">
+                                Inhale<br>4 seconds
+                            </div>
+                        </div>
+                    </div>
+                    <div class="technique-card">
+                        <h4>Progressive Muscle Relaxation</h4>
+                        <p>Systematically tense and relax each muscle group:</p>
+                        <ol>
+                            <li>Tense the muscle group (5 seconds)</li>
+                            <li>Release the tension (10 seconds)</li>
+                            <li>Notice the difference in sensation</li>
+                        </ol>
+                        <p>Start with your toes and work up to your face.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Mental Health Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Box Breathing Animation
+        const breathingText = document.getElementById('breathingText');
+        const phases = [
+            { text: 'Inhale<br>4 seconds', duration: 4000 },
+            { text: 'Hold<br>4 seconds', duration: 4000 },
+            { text: 'Exhale<br>4 seconds', duration: 4000 },
+            { text: 'Hold<br>4 seconds', duration: 4000 }
+        ];
+        
+        let currentPhase = 0;
+        
+        function updateBreathing() {
+            breathingText.innerHTML = phases[currentPhase].text;
+            setTimeout(() => {
+                currentPhase = (currentPhase + 1) % phases.length;
+                updateBreathing();
+            }, phases[currentPhase].duration);
+        }
+        
+        updateBreathing();
+    </script>
+</body>
+</html>

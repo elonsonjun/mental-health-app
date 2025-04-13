@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Profile Photo Section -->
+                        <div class="col-md-4 text-center mb-4">
+                            {% if current_user.photo %}
+                                <img src="{{ url_for('static', filename='uploads/' + current_user.photo) }}" 
+                                     alt="Profile Photo" 
+                                     class="img-fluid rounded-circle mb-3"
+                                     style="width: 200px; height: 200px; object-fit: cover;">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='default-avatar.png') }}" 
+                                     alt="Default Profile Photo" 
+                                     class="img-fluid rounded-circle mb-3"
+                                     style="width: 200px; height: 200px; object-fit: cover;">
+                            {% endif %}
+
+                            {% if current_user.role == 'doctor' %}
+                            <form action="{{ url_for('upload_photo') }}" method="POST" enctype="multipart/form-data" class="mb-3">
+                                <div class="form-group">
+                                    <label for="photo" class="btn btn-outline-primary">
+                                        Choose Photo
+                                        <input type="file" name="photo" id="photo" class="d-none" accept="image/*" onchange="this.form.submit()">
+                                    </label>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+
+                        <!-- Profile Information Section -->
+                        <div class="col-md-8">
+                            <h4>{{ current_user.name or current_user.username }}</h4>
+                            <p><strong>Email:</strong> {{ current_user.email }}</p>
+                            <p><strong>Role:</strong> {{ current_user.role.capitalize() }}</p>
+                            {% if current_user.role == 'doctor' %}
+                                <p><strong>Specialization:</strong> {{ current_user.specialization or 'Not specified' }}</p>
+                            {% endif %}
+                            <p><strong>Member since:</strong> {{ current_user.created_at.strftime('%B %d, %Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Preview selected image before upload
+    document.getElementById('photo')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.querySelector('img.rounded-circle');
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}
